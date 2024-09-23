@@ -8,3 +8,5 @@ from .Fan.RealFan import RealFan
 from .Fan.MockedFan import MockedFan 
 from .Humidifier.RealHumidifier import RealHumidifier 
 from .Humidifier.Humidifier import Humidifier 
+from .Actuators import Actuators 
+from .Sensors import Sensors
