@@ -1,23 +1,41 @@
-from SHT30.TempAndHumReader import TempAndHumReader
-from machine import I2C, Pin
+import machine
+from machine import Pin, I2C
+from display.ssd1306 import SSD1306_I2C
+from peripherals.Fan.RealFan import RealFan
+from peripherals.Heater.RealHeater import RealHeater
+from peripherals.TempAndHumSensor.RealTempAndHumSensor import RealTempAndHumSensor
 import time
 
 
-i2c = I2C(0, scl=Pin(5), sda=Pin(4), freq=100000)
-tempAndHumReader = TempAndHumReader(i2c)
+WIDTH = 128
+HEIGHT = 64
 
+i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=400000)
+display = SSD1306_I2C(128, 64, i2c)
+i2ctemp = I2C(1, scl=Pin(11), sda=Pin(10), freq=100000)
+tempAndHumReader = RealTempAndHumSensor(i2ctemp)
 
-def validate_pins():
-    if tempAndHumReader.is_sensor_connected():
-        print("Sensor not detected.")
+heater = RealHeater(19)
+fans = RealFan(20)
+water = RealFan(21)
 
 
 while True:
-
-    validate_pins()
-
     temperature, humidity = tempAndHumReader.get_celsius_measurements()
-    print(f"Temperature: {temperature:.2f} °C, Humidity: {humidity:.2f} %")
-        
-    time.sleep_ms(350)
+    formatted_temp = "{:.1f}".format(temperature)
+    formatted_hum = "{:.1f}".format(humidity)
 
+    display.text('Temperature:',0,0)
+    display.text(f'{formatted_temp}',0,14)
+    display.text('Humidity',0,28)
+    display.text(f'{formatted_hum}',0,42)
+    display.show()
+    display.fill(0)
+        
+    heater.start_heating()
+    fans.start_working()
+    water.start_working()
+
+    heater.stop_heating()
+    water.stop_working()
+    fans.stop_working()
