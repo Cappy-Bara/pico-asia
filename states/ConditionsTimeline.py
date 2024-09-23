@@ -1,12 +1,4 @@
-class Conditions:
-    def __init__(self, temperature:float, humidity:float):
-        self.temperature = temperature
-        self.humidity = humidity
-
-class ConditionsTimeFrame:
-    def __init__(self, span:int, conditions:Conditions):
-        self.span = span
-        self.conditions = conditions
+from states.ConditionsTimeFrame import ConditionsTimeFrame
 
 class ConditionsTimeline:
     def __init__(self, frames:list[ConditionsTimeFrame], delta_temp:float, delta_hum:float):
@@ -23,8 +15,8 @@ class ConditionsTimeline:
         return self._current_frame.conditions
     
     def _is_frame_finished(self, passed_time:int):
-        return self._current_frame.span + self._passed_frames_time >= passed_time
+        return self._current_frame.span + self._passed_frames_time < passed_time
 
     def _swap_current_frame(self):
-        self._passed_frames_time = self._passed_frames_time + self.current_frame.span
+        self._passed_frames_time = self._passed_frames_time + self._current_frame.span
         self.current_frame = self._frames.pop()

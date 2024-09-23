@@ -1,7 +1,7 @@
-from peripherals.Heater.Heater import Heater
 import machine
+from peripherals.Humidifier.Humidifier import Humidifier
 
-class RealHumidifier(Heater):
+class RealHumidifier(Humidifier):
 
     def __init__(self, heaterPin:int):
         self.is_working = False

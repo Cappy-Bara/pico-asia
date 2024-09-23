@@ -1,37 +1,53 @@
 from machine import Pin, I2C
 from display.ssd1306 import SSD1306_I2C
-from peripherals import RealTempAndHumSensor, RealHumidifier, RealHeater, RealFan
+from peripherals import RealTempAndHumSensor, RealHumidifier, RealHeater, RealFan, Sensors
+from peripherals.Actuators import Actuators
+from peripherals.TempAndHumSensor.MockedTempAndHumSensor import MockedTempAndHumSensor
+from peripherals.TempAndHumSensor.VirtualTempAndHumSensor import VirtualTempAndHumSensor
+from states import ConditionsTimeFrame, ConditionsTimeline, Conditions, StateMachine
+from time import sleep
+
+def get_timeline():
+    con1 = Conditions(50,50)
+    con1f = ConditionsTimeFrame(10,con1)
+    con2 = Conditions(100,100)
+    con2f = ConditionsTimeFrame(10,con2)
+    con3 = Conditions(150,150)
+    con3f = ConditionsTimeFrame(10,con3)
+    con4 = Conditions(200,200)
+    con4f = ConditionsTimeFrame(10,con4)
+
+    return ConditionsTimeline([con1f,con2f,con3f,con4f],10,10)
 
 
-WIDTH = 128
-HEIGHT = 64
+####REAL DEVICES
+# i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=400000)
+# display = SSD1306_I2C(128, 64, i2c)
 
-i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=400000)
-display = SSD1306_I2C(128, 64, i2c)
-i2ctemp = I2C(1, scl=Pin(11), sda=Pin(10), freq=100000)
-tempAndHumReader = RealTempAndHumSensor(i2ctemp)
+# i2ctemp = I2C(1, scl=Pin(11), sda=Pin(10), freq=100000)
+# tempAndHumSensor = RealTempAndHumSensor(i2ctemp)
 
+# heater = RealHeater(19)
+# fans = RealFan(20)
+# humidifier = RealHumidifier(21)
+
+####MOCKED DEVICES
+# tempAndHumSensor = MockedTempAndHumSensor()
 heater = RealHeater(19)
 fans = RealFan(20)
 humidifier = RealHumidifier(21)
+tempAndHumSensor = VirtualTempAndHumSensor(30,30,1,1,heater,humidifier)
 
+actuators = Actuators(heater,fans,humidifier)
+sensors = Sensors(tempAndHumSensor)
+
+timeline = get_timeline()
+
+stateMachine = StateMachine(timeline,sensors,actuators)
 
 while True:
-    temperature, humidity = tempAndHumReader.get_celsius_measurements()
-    formatted_temp = "{:.1f}".format(temperature)
-    formatted_hum = "{:.1f}".format(humidity)
-
-    display.text('Temperature:',0,0)
-    display.text(f'{formatted_temp}',0,14)
-    display.text('Humidity',0,28)
-    display.text(f'{formatted_hum}',0,42)
-    display.show()
-    display.fill(0)
-        
-    heater.start_heating()
-    fans.start_working()
-    humidifier.start_working()
-
-    heater.stop_heating()
-    humidifier.stop_working()
-    fans.stop_working()
+    result = stateMachine.handle()
+    print(f'TIME:{result.passed_time}')
+    print(f'TEMP:{result.current_temperature}')
+    print(f'HUM:{result.current_humidity}')
+    sleep(0.25)

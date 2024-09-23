@@ -1,6 +1,7 @@
 import time
 from peripherals import Actuators, Sensors
-from states import ConditionsTimeline, Conditions, StateResult
+from states import ConditionsTimeline, Conditions
+from states.StateResult import StateResult
 
 
 class StateMachine:
@@ -14,14 +15,12 @@ class StateMachine:
     def handle(self):
 
         time = self.get_passed_time()
-
         required_conditions = self._timeline.get_current_frame(time)
         curr_temp, curr_hum = self._sensors.temp_hum_sensor.get_celsius_measurements()
         
         self.handle_actuators(required_conditions, curr_temp,self._timeline.delta_temp, curr_hum, self._timeline.delta_hum)
 
-        return StateResult(curr_temp, curr_hum, self._actuators.heater.is_working,
-                            self._actuators.humidifier.is_working, self._actuators.fan.is_working, time)
+        return StateResult(curr_temp, curr_hum, self._actuators.heater.is_working,self._actuators.humidifier.is_working, self._actuators.fan.is_working, time)
     
     def get_passed_time(self):
         #fix - change to minutes. Seconds for testing purpose
