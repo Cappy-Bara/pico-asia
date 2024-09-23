@@ -10,11 +10,11 @@ from time import sleep
 def get_timeline():
     con1 = Conditions(50,50)
     con1f = ConditionsTimeFrame(10,con1)
-    con2 = Conditions(100,100)
+    con2 = Conditions(60,60)
     con2f = ConditionsTimeFrame(10,con2)
-    con3 = Conditions(150,150)
+    con3 = Conditions(70,70)
     con3f = ConditionsTimeFrame(10,con3)
-    con4 = Conditions(200,200)
+    con4 = Conditions(80,80)
     con4f = ConditionsTimeFrame(10,con4)
 
     return ConditionsTimeline([con1f,con2f,con3f,con4f],10,10)
@@ -36,7 +36,7 @@ def get_timeline():
 heater = RealHeater(19)
 fans = RealFan(20)
 humidifier = RealHumidifier(21)
-tempAndHumSensor = VirtualTempAndHumSensor(30,30,1,1,heater,humidifier)
+tempAndHumSensor = VirtualTempAndHumSensor(35,35,2,2,heater,humidifier)
 
 actuators = Actuators(heater,fans,humidifier)
 sensors = Sensors(tempAndHumSensor)

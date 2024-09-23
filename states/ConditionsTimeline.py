@@ -19,4 +19,4 @@ class ConditionsTimeline:
 
     def _swap_current_frame(self):
         self._passed_frames_time = self._passed_frames_time + self._current_frame.span
-        self.current_frame = self._frames.pop()
+        self._current_frame = self._frames.pop(0)
