@@ -3,6 +3,7 @@ from machine import Pin, I2C
 from display.ssd1306 import SSD1306_I2C
 from peripherals.Fan.RealFan import RealFan
 from peripherals.Heater.RealHeater import RealHeater
+from peripherals.Humidifier.RealHumidifier import RealHumidifier
 from peripherals.TempAndHumSensor.RealTempAndHumSensor import RealTempAndHumSensor
 import time
 
@@ -17,7 +18,7 @@ tempAndHumReader = RealTempAndHumSensor(i2ctemp)
 
 heater = RealHeater(19)
 fans = RealFan(20)
-water = RealFan(21)
+humidifier = RealHumidifier(21)
 
 
 while True:
