@@ -1,5 +1,3 @@
-from .Actuators import Actuators
-from .Sensors import Sensors
 from .Heater.Heater import Heater 
 from .Heater.MockedHeater import MockedHeater 
 from .Heater.RealHeater import RealHeater 
@@ -8,3 +6,5 @@ from .TempAndHumSensor.RealTempAndHumSensor import RealTempAndHumSensor
 from .Fan.Fan import Fan 
 from .Fan.RealFan import RealFan 
 from .Fan.MockedFan import MockedFan 
+from .Humidifier.RealHumidifier import RealHumidifier 
+from .Humidifier.Humidifier import Humidifier 
