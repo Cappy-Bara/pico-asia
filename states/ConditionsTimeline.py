@@ -10,12 +10,16 @@ class ConditionsTimeline:
         self.delta_hum = delta_hum
 
     def get_current_frame(self, passed_time:int):
+
         if(self._is_frame_finished(passed_time)):
+            if(len(self._frames) == 0):
+                return None
             self._swap_current_frame()
+
         return self._current_frame.conditions
     
     def _is_frame_finished(self, passed_time:int):
-        return self._current_frame.span + self._passed_frames_time < passed_time
+        return self._current_frame.span + self._passed_frames_time <= passed_time
 
     def _swap_current_frame(self):
         self._passed_frames_time = self._passed_frames_time + self._current_frame.span
