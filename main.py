@@ -1,11 +1,10 @@
 from devices import get_real_devices
-from mocked_devices import get_mocked_devices
 from selecting_phase import selecting_phase
 from states import StateMachine
 from time import sleep_ms
 from working_phase import working_phase
 
-button,display,sensors,actuators = get_mocked_devices()
+button,display,sensors,actuators = get_real_devices()
 
 state_machine = None
 is_finished = False 
