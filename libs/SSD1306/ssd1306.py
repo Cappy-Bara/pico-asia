@@ -36,6 +36,12 @@ class SSD1306(framebuf.FrameBuffer):
         super().__init__(self.buffer, self.width, self.height, framebuf.MONO_VLSB)
         self.init_display()
 
+    def write_cmd(self, cmd):
+        raise NotImplementedError
+    
+    def write_data(self, buf):
+        raise NotImplementedError
+
     def init_display(self):
         for cmd in (
             SET_DISP,  # display off
