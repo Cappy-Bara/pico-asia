@@ -8,9 +8,9 @@ from working_phase import working_phase
 
 button,display,sensors,actuators = get_real_devices()
 
+is_finished = False
 state_machine = None
-file_writer = None
-is_finished = False 
+file_writer = FileWriter("data.csv")
 
 while not is_finished:
     
@@ -19,7 +19,6 @@ while not is_finished:
 
         if(selected_program is not None):
             state_machine = StateMachine(selected_program,sensors,actuators)
-            file_writer = FileWriter("data.csv")
             file_writer.open_file()
         sleep_ms(100)
 

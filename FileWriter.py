@@ -9,7 +9,7 @@ class FileWriter():
         return tick != self._current_tick
 
     def open_file(self):
-        self._file=open(self._file_name,"w") # type: ignore
+        self._file=open(self._file_name,"w")
         self._file.write("TEMP,HUM\n")
         pass
 
