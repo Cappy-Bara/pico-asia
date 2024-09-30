@@ -67,4 +67,4 @@ YOGHURT = [
 
 def get_timeline(definiton):
     timeframes = list(map(lambda x: ConditionsTimeFrame(x[2],Conditions(x[0],x[1])),definiton))
-    return ConditionsTimeline(timeframes,5,5)
+    return ConditionsTimeline(timeframes,2,5)

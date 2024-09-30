@@ -12,6 +12,9 @@ class StateMachine:
         self._was_temp_achieved= False
         self._start_time = time.time()
 
+        self._temp_buffer = []
+        self._hum_buffer = []
+
     def stop(self):
         self._actuators.fan.stop_working()
         self._actuators.heater.stop_heating()
@@ -28,9 +31,19 @@ class StateMachine:
 
         curr_temp, curr_hum = self._sensors.temp_hum_sensor.get_celsius_measurements()
 
-        self.handle_actuators(required_conditions, curr_temp,self._timeline.delta_temp, curr_hum, self._timeline.delta_hum)
+        self._temp_buffer.append(curr_temp)
+        self._hum_buffer.append(curr_hum)
 
-        return StateResult(curr_temp, curr_hum, self._actuators.heater.is_working,
+        if(len(self._temp_buffer) > 5):
+            self._temp_buffer.pop(0)
+            self._hum_buffer.pop(0)
+
+        mean_temp = sum(self._temp_buffer) / len(self._temp_buffer)
+        mean_hum = sum(self._hum_buffer) / len(self._hum_buffer)
+
+        self.handle_actuators(required_conditions, mean_temp,self._timeline.delta_temp, mean_hum, self._timeline.delta_hum)
+
+        return StateResult(mean_temp, mean_hum, self._actuators.heater.is_working,
                            self._actuators.humidifier.is_working, self._actuators.fan.is_working, time,
                            required_conditions.temperature, required_conditions.humidity)
     

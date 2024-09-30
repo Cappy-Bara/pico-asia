@@ -21,6 +21,10 @@ def get_mocked_sensors():
     tempAndHumSensor = MockedTempAndHumSensor()
     return Sensors(tempAndHumSensor)
 
+def get_virtual_sensors(acutators : Actuators):
+    tempAndHumSensor = VirtualTempAndHumSensor(0,0,1,1,acutators.heater, acutators.humidifier)
+    return Sensors(tempAndHumSensor)
+
 def get_mocked_actuators():
     fans = MockedFan(19)
     humidifier = MockedHumidifier(20)
@@ -29,3 +33,7 @@ def get_mocked_actuators():
 
 def get_mocked_devices():
     return get_mocked_button(), get_mocked_display(), get_mocked_sensors(), get_mocked_actuators()
+
+def get_virtual_devices():
+    ac = get_mocked_actuators()
+    return get_mocked_button(), get_mocked_display(), get_virtual_sensors(ac), ac
