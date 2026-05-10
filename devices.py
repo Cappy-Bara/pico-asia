@@ -9,7 +9,7 @@ def get_real_button():
     return RealButton(12,100,2000)
 
 def get_real_display():
-    display_i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=400000)
+    display_i2c = I2C(0, scl = Pin(17), sda = Pin(16), freq=200000)
     return RealDisplay(display_i2c,128,64)
 
 def get_real_sensors():

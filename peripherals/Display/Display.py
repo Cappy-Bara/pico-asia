@@ -10,3 +10,6 @@ class Display():
     
     def display_finish(self):
         raise NotImplementedError
+    
+    def display_error(self):
+        raise NotImplementedError

@@ -33,3 +33,10 @@ class RealDisplay(Display):
         self._display.text(f'--------------',0,28)
         self._display.show()
         self._display.fill(0)
+
+    def display_error(self):
+        self._display.text(f'!!!!!!!!!!!!!!',0,0)
+        self._display.text(f'!    ERROR   !',0,14)
+        self._display.text(f'!!!!!!!!!!!!!!',0,28)
+        self._display.show()
+        self._display.fill(0)

@@ -10,8 +10,9 @@ class FileWriter():
 
     def open_file(self):
         self._file=open(self._file_name,"w")
-        self._file.write("TEMP,HUM\n")
-        pass
+        
+    def write_text(self,text):
+        self._file.write(text)
 
     def write_data(self, data : StateResult):
         self._current_tick = data.passed_time
@@ -21,9 +22,6 @@ class FileWriter():
 
         value = f"{temp},{hum}\n"
         self._file.write(value)
-        pass
 
     def close_file(self):
         self._file.close()
-        pass
-

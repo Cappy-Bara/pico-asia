@@ -5,3 +5,8 @@ class Actuators:
         self.heater = heater
         self.fan = fan
         self.humidifier = humidifier
+
+    def stop(self):
+        self.heater.stop_heating()
+        self.fan.stop_working()
+        self.humidifier.stop_working()

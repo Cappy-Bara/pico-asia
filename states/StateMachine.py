@@ -59,8 +59,8 @@ class StateMachine:
         humidifier_is_working = self._actuators.humidifier.is_working
 
         should_heater_be_on = (heater_is_working and curr_temp < req_temp) or (not heater_is_working and curr_temp < req_temp-d_temp)
-        should_humidifier_be_on = (humidifier_is_working and curr_hum < req_hum) or (not humidifier_is_working and curr_hum < req_hum-d_hum)
-        should_fan_be_on = ((curr_hum > req_hum+10) and not self._actuators.fan.is_working) or ((curr_hum > req_hum+2) and self._actuators.fan.is_working) or ((curr_temp > req_temp+5) and not self._actuators.fan.is_working) or ((curr_temp > req_temp) and self._actuators.fan.is_working)
+        should_humidifier_be_on = req_hum is not None and ((humidifier_is_working and curr_hum < req_hum) or (not humidifier_is_working and curr_hum < req_hum-d_hum))
+        should_fan_be_on = req_hum is not None and (((curr_hum > req_hum+10) and not self._actuators.fan.is_working) or ((curr_hum > req_hum+2) and self._actuators.fan.is_working)) or ((curr_temp > req_temp+5) and not self._actuators.fan.is_working) or ((curr_temp > req_temp) and self._actuators.fan.is_working)
         
         self._actuators.heater.start_heating() if should_heater_be_on else self._actuators.heater.stop_heating()
         self._actuators.fan.start_working() if should_fan_be_on else self._actuators.fan.stop_working()

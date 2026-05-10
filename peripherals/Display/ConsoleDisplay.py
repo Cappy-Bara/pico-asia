@@ -22,5 +22,10 @@ class ConsoleDisplay(Display):
     
     def display_finish(self):
         print(f'--------------')
-        print(f'---FINISHED---')
+        print(f'-  FINISHED  -')
         print(f'--------------')
+
+    def display_error(self):
+        print(f'!!!!!!!!!!!!!!')
+        print(f'!   ERROR    !')
+        print(f'!!!!!!!!!!!!!!')

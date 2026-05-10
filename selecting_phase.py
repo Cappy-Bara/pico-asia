@@ -1,9 +1,9 @@
 from peripherals.Button.Button import Button
 from peripherals.Display.Display import Display
-from programs import NATTO, TEMPEH, YOGHURT, get_timeline
+from programs import NATTO, KOJI, AMAZAKE, get_timeline
 from states.ConditionsTimeline import ConditionsTimeline
 
-programs = [('TEMPEH', TEMPEH),('NATTO', NATTO),('YOGHURT', YOGHURT)]
+programs = [('KOJI', KOJI),('NATTO', NATTO),('AMAZAKE', AMAZAKE)]
 
 previous_program = programs[0]
 current_program = programs[1]
