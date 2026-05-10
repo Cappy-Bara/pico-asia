@@ -31,6 +31,11 @@ AMAZAKE = [
     (60,None,60*8),
 ]
 
+TEMPEH = [
+    (32,70,60*18),
+    (29,70,60*30),
+]
+
 def get_timeline(definiton):
     timeframes = list(map(lambda x: ConditionsTimeFrame(x[2],Conditions(x[0],x[1])),definiton))
     return ConditionsTimeline(timeframes,2,5)

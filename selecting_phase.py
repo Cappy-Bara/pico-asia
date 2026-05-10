@@ -1,9 +1,9 @@
 from peripherals.Button.Button import Button
 from peripherals.Display.Display import Display
-from programs import NATTO, KOJI, AMAZAKE, get_timeline
+from programs import NATTO, KOJI, AMAZAKE, TEMPEH, get_timeline
 from states.ConditionsTimeline import ConditionsTimeline
 
-programs = [('KOJI', KOJI),('NATTO', NATTO),('AMAZAKE', AMAZAKE)]
+programs = [('KOJI', KOJI),('NATTO', NATTO),('AMAZAKE', AMAZAKE), ('TEMPEH', TEMPEH)]
 
 previous_program = programs[0]
 current_program = programs[1]
@@ -17,7 +17,7 @@ def selecting_phase(button : Button, display : Display) -> ConditionsTimeline | 
         return get_timeline(current_program[1])
 
     if(button.is_short_press):
-        program_id = program_id+1 if program_id < 2 else 0
+        program_id = program_id+1 if program_id < len(programs)-1 else 0
         current_program = programs[program_id]
         pass
 
